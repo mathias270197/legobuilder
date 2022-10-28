@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:legobuilder/pages/navigation.dart';
  
 void main() => runApp(const MyApp());
  
@@ -59,6 +60,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   child: const Text('Login'),
                   onPressed: () {
                     print(nameController.text);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const Navigation()));
                   },
                 )
             ),

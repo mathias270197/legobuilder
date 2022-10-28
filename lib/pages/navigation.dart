@@ -4,30 +4,14 @@ import 'package:legobuilder/pages/reviews.dart';
 import './home.dart';
 import './info.dart';
 
-void main() => runApp(const MyApp());
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  static const String _title = 'Flutter Code Sample';
+class Navigation extends StatefulWidget {
+  const Navigation({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: _title,
-      home: MyStatefulWidget(),
-    );
-  }
+  State<Navigation> createState() => _MyStatefulWidgetState();
 }
 
-class MyStatefulWidget extends StatefulWidget {
-  const MyStatefulWidget({super.key});
-
-  @override
-  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
-}
-
-class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+class _MyStatefulWidgetState extends State<Navigation> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
