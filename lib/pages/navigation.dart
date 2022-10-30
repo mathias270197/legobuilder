@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:legobuilder/pages/camera.dart';
-import 'package:legobuilder/pages/reviews.dart';
+import 'package:legobuilder/pages/figures.dart';
 import './home.dart';
 import './info.dart';
 
