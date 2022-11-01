@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:legobuilder/pages/navigation.dart';
- 
+
+import 'package:localstorage/localstorage.dart';
+
 void main() => runApp(const MyApp());
- 
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
- 
+
   static const String _title = 'LegoBuilder';
- 
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,17 +21,22 @@ class MyApp extends StatelessWidget {
     );
   }
 }
- 
+
 class MyStatefulWidget extends StatefulWidget {
   const MyStatefulWidget({Key? key}) : super(key: key);
- 
+
   @override
   State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
 }
- 
+
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   TextEditingController nameController = TextEditingController();
- 
+  final LocalStorage storage = new LocalStorage('localstorage_app');
+
+  void addUserNameToLocalStorage(name) {
+    storage.setItem('username', name);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -59,11 +66,13 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 child: ElevatedButton(
                   child: const Text('Login'),
                   onPressed: () {
-                    print(nameController.text);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const Navigation()));
+                    addUserNameToLocalStorage(nameController.text);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Navigation()));
                   },
-                )
-            ),
+                )),
           ],
         ));
   }
