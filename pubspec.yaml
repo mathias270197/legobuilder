@@ -63,11 +63,10 @@ flutter:
 
   assets:
     - samples/
-    - samples/03_MultipleTargets_1_MultipleTargets/
-    - samples/03_MultipleTargets_1_MultipleTargets/js/
-    - samples/03_MultipleTargets_1_MultipleTargets/css/
-    - samples/03_MultipleTargets_1_MultipleTargets/assets/
-    - samples/03_MultipleTargets_1_MultipleTargets/assets/models/
+    - samples/mt/
+    - samples/mt/js/
+    - samples/mt/css/
+    - samples/mt/assets/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
