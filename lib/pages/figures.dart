@@ -26,6 +26,7 @@
 import 'package:flutter/material.dart';
 import '../models/figure.dart';
 import '../apis/figure_api.dart';
+import 'figure_review.dart';
 
 class Reviews extends StatefulWidget {
   const Reviews({Key? key}) : super(key: key);
@@ -34,20 +35,6 @@ class Reviews extends StatefulWidget {
   State<StatefulWidget> createState() => _ReviewsPageState();
 }
 
-// class _ReviewsPageState extends State {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text("Reviews"),
-//       ),
-//       body: Container(
-//         padding: const EdgeInsets.all(5.0),
-//         child: const Text("Reviewlist"),
-//       ),
-//     );
-//   }
-// }
 
 class _ReviewsPageState extends State {
   List<Figure> figureList = [];
@@ -93,14 +80,25 @@ class _ReviewsPageState extends State {
             //   backgroundColor: Colors.red,
             //   child: Text(reviewList[position].name),
             // ),
-            title: Text("${figureList[position].name} ${figureList[position].numberOfSteps}"),
+            title: Text(
+                "${figureList[position].name} ${figureList[position].numberOfSteps}"),
             // subtitle: Text(userList[position].email),
             onTap: () {
               debugPrint("Tapped on ${figureList[position].name}");
+              _navigateToReview(figureList[position].name);
             },
           ),
         );
       },
     );
+  }
+
+  void _navigateToReview(String figureName) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => FigureReviewPage(figureName: figureName)),
+    );
+    _getReviews();
   }
 }

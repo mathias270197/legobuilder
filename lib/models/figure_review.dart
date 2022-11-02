@@ -1,19 +1,19 @@
-class FigureDetail {
+class FigureReview {
   String figureName;
   String date;
   String textReview;
   int stars;
   String user;
 
-  FigureDetail(
+  FigureReview(
       {required this.figureName,
       required this.date,
       required this.textReview,
       required this.stars,
       required this.user});
 
-  factory FigureDetail.fromJson(Map<String, dynamic> json) {
-    return FigureDetail(
+  factory FigureReview.fromJson(Map<String, dynamic> json) {
+    return FigureReview(
       figureName: json['figureName'],
       date: json['date'],
       textReview: json['textReview'],
