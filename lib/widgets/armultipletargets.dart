@@ -1,6 +1,7 @@
 import 'package:augmented_reality_plugin_wikitude/architect_widget.dart';
 import 'package:augmented_reality_plugin_wikitude/startupConfiguration.dart';
 import 'package:flutter/material.dart';
+import 'package:localstorage/localstorage.dart';
 
 class ArMultipleTargetsWidget extends StatefulWidget {
   const ArMultipleTargetsWidget({Key? key}) : super(key: key);
@@ -74,6 +75,10 @@ class _ArMultipleTargetsWidgetState extends State<ArMultipleTargetsWidget>
 
   Future<void> onLoadSuccess() async {
     debugPrint("Successfully loaded Architect World");
+    final LocalStorage storage = LocalStorage('localstorage_app');
+    final user = storage.getItem('username');
+    debugPrint(user);
+    architectWidget.callJavascript('World.newData("$user")');
   }
 
   Future<void> onLoadFailed(String error) async {
