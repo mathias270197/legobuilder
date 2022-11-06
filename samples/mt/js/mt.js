@@ -1,5 +1,5 @@
 var World = {
-    id: 0,
+    name: "test",
     loaded: false,
 
 
@@ -54,7 +54,19 @@ var World = {
          */
         this.stepTrackable = new AR.ImageTrackable(this.tracker, "*", {
             onImageRecognized: async function (target) {
-                var stars = await getStars(target, "Mathias")
+                var stars = await getStars(target, World.name)
+                alert(stars);
+                if(stars === undefined){
+                    var imageres = new AR.ImageResource("assets/reviewbutton.png");
+                    var model = new AR.ImageDrawable(imageres, 1, {
+                        translate: {
+                            x: -0.15,
+                            y: -0.9
+                        },
+                        onError: World.onError
+                    });
+                    this.addImageTargetCamDrawables(target, model);
+                }
                 var imageres = new AR.ImageResource("assets/" + stars + "ster.png");
                 var model = new AR.ImageDrawable(imageres, 1, {
                     translate: {
@@ -73,14 +85,18 @@ var World = {
     onError: function onErrorFn(error) {
         alert(error);
     },
+
+    newData: function newDataFn(newName) {
+        World.name = newName;
+    }
 };
 
 World.init();
 
-async function getStars(target, user){
+async function getStars(target, username){
     target = JSON.stringify(target.name);
     figure = target.match(/[a-zA-Z]+/g);
-    const response = await fetch('https://edge-service-mathias270197.cloud.okteto.net/figureReviewByNameAndUser/' + figure + '/' + user,
+    const response = await fetch('https://edge-service-mathias270197.cloud.okteto.net/figureReviewByNameAndUser/' + figure + '/' + username,
         {
             method: "GET"
         }
