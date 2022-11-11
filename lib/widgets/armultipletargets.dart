@@ -1,7 +1,10 @@
 import 'package:augmented_reality_plugin_wikitude/architect_widget.dart';
 import 'package:augmented_reality_plugin_wikitude/startupConfiguration.dart';
 import 'package:flutter/material.dart';
+import 'package:legobuilder/pages/figures.dart';
 import 'package:localstorage/localstorage.dart';
+
+import '../models/ar_figureResponse.dart';
 
 class ArMultipleTargetsWidget extends StatefulWidget {
   const ArMultipleTargetsWidget({Key? key}) : super(key: key);
@@ -71,6 +74,8 @@ class _ArMultipleTargetsWidgetState extends State<ArMultipleTargetsWidget>
         onLoadSuccess,
         onLoadFailed);
     architectWidget.resume();
+    architectWidget.setJSONObjectReceivedCallback(
+      (result) => onJSONObjectReceived(result));
   }
 
   Future<void> onLoadSuccess() async {
@@ -84,5 +89,12 @@ class _ArMultipleTargetsWidgetState extends State<ArMultipleTargetsWidget>
   Future<void> onLoadFailed(String error) async {
     debugPrint("Failed to load Architect World");
     debugPrint(error);
+  }
+
+  Future<void> onJSONObjectReceived(Map<String, dynamic> jsonObject) async {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Reviews()),
+      );
   }
 }

@@ -33,12 +33,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   TextEditingController nameController = TextEditingController();
   final LocalStorage storage = new LocalStorage('localstorage_app');
 
+
   void addUserNameToLocalStorage(String name) {
     storage.setItem('username', capitalize(name));
   }
 
   String capitalize(String text) {
     return "${text[0].toUpperCase()}${text.substring(1).toLowerCase()}";
+
   }
 
   @override

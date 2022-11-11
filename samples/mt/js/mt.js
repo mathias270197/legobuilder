@@ -34,16 +34,18 @@ var World = {
         });
 
         
-        var imgOne = new AR.ImageResource("assets/1ster.png", {
-            onError: World.onError
-        });
-        var overlayOne = new AR.ImageDrawable(imgOne, 1, {
+        this.reviewbutton = new AR.ImageResource("assets/reviewbutton.png");
+        this.reviewbuttonoverlay =  new AR.ImageDrawable(this.reviewbutton, 1, {
             translate: {
                 x: -0.15,
                 y: -0.9
-            },
-            scale: { x: 0.4, y: 0.6}
+            }
         });
+        World.reviewbuttonoverlay.onClick = function() {
+            AR.platform.sendJSONObject({
+                "image_clicked" : "review"
+            });
+        }
 
 
         /*
@@ -55,17 +57,16 @@ var World = {
         this.stepTrackable = new AR.ImageTrackable(this.tracker, "*", {
             onImageRecognized: async function (target) {
                 var stars = await getStars(target, World.name)
-                alert(stars);
                 if(stars === undefined){
-                    var imageres = new AR.ImageResource("assets/reviewbutton.png");
+                    /*var imageres = new AR.ImageResource("assets/reviewbutton.png");
                     var model = new AR.ImageDrawable(imageres, 1, {
                         translate: {
                             x: -0.15,
                             y: -0.9
                         },
                         onError: World.onError
-                    });
-                    this.addImageTargetCamDrawables(target, model);
+                    });*/
+                    this.addImageTargetCamDrawables(target, World.reviewbuttonoverlay);
                 }
                 var imageres = new AR.ImageResource("assets/" + stars + "ster.png");
                 var model = new AR.ImageDrawable(imageres, 1, {
