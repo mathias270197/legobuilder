@@ -32,7 +32,7 @@ class FigureApi {
         return FigureReview.fromJson(jsonDecode(response.body));
       } else {
         return FigureReview(
-            date: '',
+            date: "",
             user: user,
             figureName: figureName,
             stars: 5,
@@ -46,7 +46,8 @@ class FigureApi {
   static Future<FigureReview> createFigureReview(
       FigureReview figureReview) async {
     var url = Uri.https(server, '/figureReview');
-    figureReview.date = DateTime.now().toString();
+    figureReview.date =
+        "${DateTime.now().year.toString()}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}";
     final http.Response response = await http.post(
       url,
       headers: <String, String>{
@@ -54,7 +55,7 @@ class FigureApi {
       },
       body: jsonEncode(figureReview),
     );
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       return FigureReview.fromJson(jsonDecode(response.body));
     } else {
       throw Exception('Failed to create review');

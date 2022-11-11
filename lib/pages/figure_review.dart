@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../apis/figure_api.dart';
 import '../models/figure_review.dart';
 
+import 'package:getwidget/getwidget.dart';
+
 const List<String> choices = <String>[
   'Save review & Back',
   'Delete this review',
@@ -57,7 +59,8 @@ class _FigureReviewPageState extends State<FigureReviewPage> {
   }
 
   void _deleteReview() {
-    FigureApi.deleteFigureReview(figureReview!.figureName,figureReview!.user).then((result) {
+    FigureApi.deleteFigureReview(figureReview!.figureName, figureReview!.user)
+        .then((result) {
       Navigator.pop(context, true);
     });
   }
@@ -80,7 +83,7 @@ class _FigureReviewPageState extends State<FigureReviewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Figure details"),
+        title: const Text("Figure detail"),
         actions: <Widget>[
           PopupMenuButton<String>(
             onSelected: _menuSelected,
@@ -104,7 +107,6 @@ class _FigureReviewPageState extends State<FigureReviewPage> {
 
   _figureReview() {
     if (figureReview == null) {
-      // show a ProgressIndicator as long as there's no user info
       return const Center(child: CircularProgressIndicator());
     } else {
       TextStyle? textStyle = Theme.of(context).textTheme.bodyText1;
@@ -117,18 +119,18 @@ class _FigureReviewPageState extends State<FigureReviewPage> {
         padding: const EdgeInsets.all(10.0),
         child: Column(
           children: <Widget>[
-            TextField(
-              controller: figureNameController,
-              style: textStyle,
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                labelText: "Name of the figure",
-                labelStyle: textStyle,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-              ),
-            ),
+            Text(widget.figureName,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  background: Paint()
+                    ..color = Colors.blue
+                    ..strokeWidth = 20
+                    ..strokeJoin = StrokeJoin.round
+                    ..strokeCap = StrokeCap.round
+                    ..style = PaintingStyle.stroke,
+                  color: Colors.white,
+                )),
+
             Container(
               height: 15,
             ),
@@ -147,18 +149,38 @@ class _FigureReviewPageState extends State<FigureReviewPage> {
             Container(
               height: 15,
             ),
-            TextField(
+            GFRating(
+              value: figureReview!.stars.toDouble(),
+              onChanged: (value) {
+                setState(() {
+                  figureReview!.stars = value.toInt();
+                });
+              },
+              showTextForm: true,
               controller: starsController,
-              style: textStyle,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: "Number of stars",
-                labelStyle: textStyle,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
+              suffixIcon: GFButton(
+                type: GFButtonType.transparent,
+                onPressed: () {
+                  setState(() {
+                    figureReview!.stars = int.parse(starsController.text);
+                  });
+                },
+                child: const Text('Rate'),
               ),
             ),
+
+            // TextField(
+            //   controller: starsController,
+            //   style: textStyle,
+            //   keyboardType: TextInputType.number,
+            //   decoration: InputDecoration(
+            //     labelText: "Number of stars",
+            //     labelStyle: textStyle,
+            //     border: OutlineInputBorder(
+            //       borderRadius: BorderRadius.circular(5.0),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       );
