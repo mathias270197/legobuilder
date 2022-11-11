@@ -33,7 +33,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   TextEditingController nameController = TextEditingController();
   final LocalStorage storage = new LocalStorage('localstorage_app');
 
-  void addUserNameToLocalStorage(name) {
+  Future<void> addUserNameToLocalStorage(name) async {
     storage.setItem('username', name);
   }
 
