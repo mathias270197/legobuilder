@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: _title,
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(title: const Text(_title)),
         body: const MyStatefulWidget(),
@@ -33,14 +34,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   TextEditingController nameController = TextEditingController();
   final LocalStorage storage = new LocalStorage('localstorage_app');
 
-
+  //username wordt toegevoegd aan localstorage
   void addUserNameToLocalStorage(String name) {
     storage.setItem('username', capitalize(name));
   }
 
+  //eerste letter van username wordt in hoofdletter gezet
   String capitalize(String text) {
     return "${text[0].toUpperCase()}${text.substring(1).toLowerCase()}";
-
   }
 
   @override

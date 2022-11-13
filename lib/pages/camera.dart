@@ -17,7 +17,7 @@ class _CameraState extends State<Camera> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Title in App Bar"),
+        title: const Text("Camera"),
       ),
       body: Center(
         child: ElevatedButton(
