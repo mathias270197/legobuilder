@@ -83,6 +83,7 @@ class _ArMultipleTargetsWidgetState extends State<ArMultipleTargetsWidget>
     final LocalStorage storage = LocalStorage('localstorage_app');
     final user = storage.getItem('username');
     debugPrint(user);
+    //aan de hand van de localstorage wordt de username doorgegeven aan wikitude
     architectWidget.callJavascript('World.newData("$user")');
   }
 
@@ -90,7 +91,7 @@ class _ArMultipleTargetsWidgetState extends State<ArMultipleTargetsWidget>
     debugPrint("Failed to load Architect World");
     debugPrint(error);
   }
-
+  //als er op de afbeelding wordt geklikt word je doorgestuurd naar de reviewpagina
   Future<void> onJSONObjectReceived(Map<String, dynamic> jsonObject) async {
       Navigator.push(
         context,

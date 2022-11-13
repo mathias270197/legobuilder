@@ -7,15 +7,16 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Title in App Bar"),
+        title: const Text("Home"),
       ),
       body: const Material(
-        color: Colors.deepPurple,
+        color: Colors.blue,
         child: Center(
           child: Text(
-            "Hello Flutter!",
+            "Welcome to the lego builder",
             textDirection: TextDirection.ltr,
             style: TextStyle(color: Colors.white, fontSize: 36.0),
+            textAlign: TextAlign.center,
           ),
         ),
       ),

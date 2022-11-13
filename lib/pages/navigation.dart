@@ -49,7 +49,7 @@ class _MyStatefulWidgetState extends State<Navigation> {
           BottomNavigationBarItem(
             icon: Icon(Icons.info),
             label: 'Info',
-            backgroundColor: Colors.purple,
+            backgroundColor: Colors.red,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.reviews),

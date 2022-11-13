@@ -33,18 +33,16 @@ var World = {
             onError: World.onError
         });
 
-        
+
         this.reviewbutton = new AR.ImageResource("assets/reviewbutton.png");
-        this.reviewbuttonoverlay =  new AR.ImageDrawable(this.reviewbutton, 1, {
+        this.reviewbuttonoverlay = new AR.ImageDrawable(this.reviewbutton, 1, {
             translate: {
                 x: -0.15,
                 y: -0.9
             }
         });
-        World.reviewbuttonoverlay.onClick = function() {
-            AR.platform.sendJSONObject({
-                "image_clicked" : "review"
-            });
+        World.reviewbuttonoverlay.onClick = function () {
+            AR.hardware.camera.enabled = false;
         }
 
 
@@ -57,7 +55,8 @@ var World = {
         this.stepTrackable = new AR.ImageTrackable(this.tracker, "*", {
             onImageRecognized: async function (target) {
                 var stars = await getStars(target, World.name)
-                if(stars === undefined){
+                alert(stars)
+                if (stars === undefined) {
                     /*var imageres = new AR.ImageResource("assets/reviewbutton.png");
                     var model = new AR.ImageDrawable(imageres, 1, {
                         translate: {
@@ -68,13 +67,14 @@ var World = {
                     });*/
                     this.addImageTargetCamDrawables(target, World.reviewbuttonoverlay);
                 }
+                //afbeelding wordt bepaald door de functie getstars
                 var imageres = new AR.ImageResource("assets/" + stars + "ster.png");
                 var model = new AR.ImageDrawable(imageres, 1, {
                     translate: {
                         x: -0.15,
                         y: -0.9
                     },
-                    scale: { x: 0.4, y: 0.6},
+                    scale: { x: 0.4, y: 0.6 },
                     onError: World.onError
                 });
                 this.addImageTargetCamDrawables(target, model);
@@ -86,22 +86,22 @@ var World = {
     onError: function onErrorFn(error) {
         alert(error);
     },
-
+    //newData wordt gebruikt om de username op te halen
     newData: function newDataFn(newName) {
         World.name = newName;
     }
 };
 
 World.init();
-
-async function getStars(target, username){
+//functie om het aantal sterren terug te krijgen van een user bij een bepaald figuur
+async function getStars(target, username) {
     target = JSON.stringify(target.name);
     figure = target.match(/[a-zA-Z]+/g);
     const response = await fetch('https://edge-service-mathias270197.cloud.okteto.net/figureReviewByNameAndUser/' + figure + '/' + username,
         {
             method: "GET"
         }
-    );  
+    );
     const data = await response.json();
-    return JSON.stringify(data.stars);
+    return(JSON.stringify(data.stars));
 }
