@@ -5,7 +5,7 @@ class ARImageResponse {
   
   factory ARImageResponse.fromJson(Map<String, dynamic> json) {
     return ARImageResponse(
-      imageScanned: json['image_clicked'],
+      imageScanned: json['image_scanned'],
     );
   }
 

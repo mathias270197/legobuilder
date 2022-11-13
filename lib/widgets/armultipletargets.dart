@@ -4,14 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:legobuilder/pages/figures.dart';
 import 'package:localstorage/localstorage.dart';
 
+import '../apis/figure_api.dart';
 import '../models/ar_figureResponse.dart';
+import '../models/figure.dart';
+import '../pages/figure_review.dart';
 
 class ArMultipleTargetsWidget extends StatefulWidget {
   const ArMultipleTargetsWidget({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() =>
-      _ArMultipleTargetsWidgetState();
+  State<StatefulWidget> createState() => _ArMultipleTargetsWidgetState();
 }
 
 class _ArMultipleTargetsWidgetState extends State<ArMultipleTargetsWidget>
@@ -69,13 +71,10 @@ class _ArMultipleTargetsWidgetState extends State<ArMultipleTargetsWidget>
   }
 
   Future<void> onArchitectWidgetCreated() async {
-    architectWidget.load(
-        "samples/mt/index.html",
-        onLoadSuccess,
-        onLoadFailed);
+    architectWidget.load("samples/mt/index.html", onLoadSuccess, onLoadFailed);
     architectWidget.resume();
     architectWidget.setJSONObjectReceivedCallback(
-      (result) => onJSONObjectReceived(result));
+        (result) => onJSONObjectReceived(result));
   }
 
   Future<void> onLoadSuccess() async {
@@ -91,11 +90,13 @@ class _ArMultipleTargetsWidgetState extends State<ArMultipleTargetsWidget>
     debugPrint("Failed to load Architect World");
     debugPrint(error);
   }
-  //als er op de afbeelding wordt geklikt word je doorgestuurd naar de reviewpagina
-  Future<void> onJSONObjectReceived(Map<String, dynamic> jsonObject) async {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => Reviews()),
-      );
+
+  //als er op de afbeelding wordt gescand word je doorgestuurd naar de reviewpagina
+  void onJSONObjectReceived(Map<String, dynamic> jsonObject) async {
+    var imageScanned = ARImageResponse.fromJson(jsonObject);
+    var figure = imageScanned.imageScanned
+        .substring(0, imageScanned.imageScanned.length - 1);
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const Reviews()));
   }
 }

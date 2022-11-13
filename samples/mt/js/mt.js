@@ -41,9 +41,6 @@ var World = {
                 y: -0.9
             }
         });
-        World.reviewbuttonoverlay.onClick = function () {
-            AR.hardware.camera.enabled = false;
-        }
 
 
         /*
@@ -55,17 +52,10 @@ var World = {
         this.stepTrackable = new AR.ImageTrackable(this.tracker, "*", {
             onImageRecognized: async function (target) {
                 var stars = await getStars(target, World.name)
-                alert(stars)
                 if (stars === undefined) {
-                    /*var imageres = new AR.ImageResource("assets/reviewbutton.png");
-                    var model = new AR.ImageDrawable(imageres, 1, {
-                        translate: {
-                            x: -0.15,
-                            y: -0.9
-                        },
-                        onError: World.onError
-                    });*/
-                    this.addImageTargetCamDrawables(target, World.reviewbuttonoverlay);
+                    AR.platform.sendJSONObject({
+                        "image_scanned" : target.name
+                    });
                 }
                 //afbeelding wordt bepaald door de functie getstars
                 var imageres = new AR.ImageResource("assets/" + stars + "ster.png");
@@ -102,6 +92,13 @@ async function getStars(target, username) {
             method: "GET"
         }
     );
-    const data = await response.json();
-    return(JSON.stringify(data.stars));
+    const contentType = response.headers.get("content-type");
+    if (contentType && contentType.indexOf("application/json") !== -1) {
+        const data = await response.json();
+        return(JSON.stringify(data.stars));
+    } else {
+        const stars = undefined;
+        return stars
+    }
+
 }
