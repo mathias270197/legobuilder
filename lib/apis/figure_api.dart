@@ -27,8 +27,8 @@ class FigureApi {
 
     final response = await http.get(url);
 
-    if (response.statusCode == 200) {
-      if (response.contentLength != 0) {
+    if (response.statusCode == 200 || response.statusCode == 500) {
+      if (response.statusCode == 200 && response.body != "") {
         return FigureReview.fromJson(jsonDecode(response.body));
       } else {
         return FigureReview(

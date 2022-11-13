@@ -1,28 +1,3 @@
-// import 'package:flutter/material.dart';
-
-// class Reviews extends StatelessWidget {
-//   const Reviews({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text("Title in App Bar"),
-//       ),
-//       body: const Material(
-//         color: Colors.deepPurple,
-//         child: Center(
-//           child: Text(
-//             "Hello Flutter!",
-//             textDirection: TextDirection.ltr,
-//             style: TextStyle(color: Colors.white, fontSize: 36.0),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import '../models/figure.dart';
 import '../apis/figure_api.dart';
@@ -76,15 +51,9 @@ class _ReviewsPageState extends State {
           color: Colors.white,
           elevation: 2.0,
           child: ListTile(
-            // leading: CircleAvatar(
-            //   backgroundColor: Colors.red,
-            //   child: Text(reviewList[position].name),
-            // ),
             title: Text(
-                "${figureList[position].name} ${figureList[position].numberOfSteps}"),
-            // subtitle: Text(userList[position].email),
+                "${figureList[position].name} with ${figureList[position].numberOfSteps} steps to build"),
             onTap: () {
-              debugPrint("Tapped on ${figureList[position].name}");
               _navigateToReview(figureList[position].name);
             },
           ),
