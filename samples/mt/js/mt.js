@@ -19,16 +19,6 @@ var World = {
             onError: World.onError
         });
 
-        /*
-            This resource is then used as parameter to create an AR.ImageTracker. Optional parameters are passed as
-            object in the last argument. In this case a callback function for the onTargetsLoaded trigger is set. Once
-            the tracker loaded all of its target images this callback function is invoked. We also set the callback
-            function for the onError trigger which provides a sting containing a description of the error.
-
-            To enable simultaneous tracking of multiple targets 'maximumNumberOfConcurrentlyTrackableTargets' has
-            to be set.
-            to be set.
-         */
         this.tracker = new AR.ImageTracker(this.targetCollectionResource, {
             onError: World.onError
         });
@@ -43,19 +33,14 @@ var World = {
         });
 
 
-        /*
-            Note that this time we use "*" as target name. That means that the AR.ImageTrackable will respond to
-            any target that is defined in the target collection. You can use wildcards to specify more complex name
-            matchings. E.g. 'target_?' to reference 'target_1' through 'target_9' or 'target*' for any targets
-            names that start with 'target'.
-         */
         this.stepTrackable = new AR.ImageTrackable(this.tracker, "*", {
             onImageRecognized: async function (target) {
                 var stars = await getStars(target, World.name)
                 if (stars === undefined) {
-                    AR.platform.sendJSONObject({
+                    /*AR.platform.sendJSONObject({
                         "image_scanned" : target.name
-                    });
+                    });*/
+                    this.addImageTargetCamDrawables(target, World.reviewbuttonoverlay)
                 }
                 //afbeelding wordt bepaald door de functie getstars
                 var imageres = new AR.ImageResource("assets/" + stars + "ster.png");
