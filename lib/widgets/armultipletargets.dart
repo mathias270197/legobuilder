@@ -73,8 +73,8 @@ class _ArMultipleTargetsWidgetState extends State<ArMultipleTargetsWidget>
   Future<void> onArchitectWidgetCreated() async {
     architectWidget.load("samples/mt/index.html", onLoadSuccess, onLoadFailed);
     architectWidget.resume();
-    architectWidget.setJSONObjectReceivedCallback(
-        (result) => onJSONObjectReceived(result));
+    /*architectWidget.setJSONObjectReceivedCallback(
+        (result) => onJSONObjectReceived(result));*/
   }
 
   Future<void> onLoadSuccess() async {
@@ -92,11 +92,12 @@ class _ArMultipleTargetsWidgetState extends State<ArMultipleTargetsWidget>
   }
 
   //als er op de afbeelding wordt gescand word je doorgestuurd naar de reviewpagina
-  void onJSONObjectReceived(Map<String, dynamic> jsonObject) async {
+  /*void onJSONObjectReceived(Map<String, dynamic> jsonObject) async {
     var imageScanned = ARImageResponse.fromJson(jsonObject);
     var figure = imageScanned.imageScanned
         .substring(0, imageScanned.imageScanned.length - 1);
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => const Reviews()));
-  }
+    debugPrint("na de navigatie");
+  }*/
 }
